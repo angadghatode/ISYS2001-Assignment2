@@ -1,5 +1,6 @@
 # Dev Diary: 
 
+
 # Day 1: 
 
 **Tried**: I wanted to choose a final project idea and start the design. My first idea was a payslip analyser for casual workers, but I didn't like it. It felt like a spreadsheet with a chatbot attached.
@@ -15,3 +16,20 @@
 **Done today**: Created the GitHub repo and made my first commit. Wrote the worked example by hand with fake payslips.
 
 **Next**: Write the pseudocode (Step 4) and get my Gemini API key, keeping it out of the repo.
+
+
+# Day 2: 
+
+**Tried**: I needed to translate my planning (Steps 1-4) into actual code in Google Colab. Initially, I was using two separate notebooks, one for writing the markdown steps and one for the Python code, and didn't know how to link a separate CSV file.
+
+**Asked**: I asked the AI how to structure the files in my GitHub repo and how to convert my pseudocode into a working Python function using pandas.
+
+**Kept**: I kept the AI's suggestion to use Colab's `%%writefile` magic command to generate the `payslips.csv` directly inside the notebook. This makes the notebook completely self-contained, which fits the assignment requirements much better than requiring a user to manually upload a file just to test the basic logic.
+
+**Changed**: The AI told me to merge my text notebook and my coding notebook into a single file. I restructured my Colab notebook so it flows numerically from Step 1 down to Step 5, blending Markdown cells for the text and Code cells for the logic. 
+
+**Rejected**: I avoided using standard Python dictionary/loop logic for reading the CSV, even though it was an option. Pandas makes doing column math (like `df['Gross Pay'] - df['Tax Withheld']`) much faster and cleaner for this specific task.
+
+**Done today**: Merged everything into `assignment2.ipynb`. Added Step 3 and Step 4 in Markdown. Wrote the Python function for Step 5 and ran it. It printed out `$26.28` hourly and `13.3` hours—matching my manual hand-math perfectly!
+
+**Next**: Write `assert` tests (Step 6) to make sure the function handles bad inputs (like zero hours worked) without crashing.
