@@ -47,3 +47,21 @@
 **Done today**: Wrote and passed the Step 6 tests. My notebook now has a fully working, tested custom tool that calculates the real cost of purchases for casual workers.
 
 **Next**: Start integrating the Gemini API to build the conversational "Finance Coach" persona. I need to make sure I use the correct free-tier model alias.
+
+# Day 4:
+
+**Tried**: I needed to connect the Gemini API (Requirement 1) and make sure it actually used the math from my Python tool (Requirement 2) rather than giving generic advice.
+
+**Asked**: I asked the AI how to securely use an API key in Colab without exposing it in my GitHub repo, and how to structure a prompt that injects my dictionary of results (`normal_result`).
+
+**Kept**: I used Colab's `userdata.get()` feature to pull the key from the Secrets tab. This perfectly satisfies the assignment rule to keep the key out of the repository. I also kept the `system_instruction` parameter to give the model a strict "pragmatic retail worker coach" persona.
+
+**Changed**: I made sure to map the specific outputs from my pandas function (`Hourly Rate`, `Cost in Hours`, `Days Delayed`) directly into an f-string prompt. 
+
+**Done today**: Successfully connected `gemini-1.5-flash-latest`. Tested it with a dummy question about headphones, and it referenced the exact 13.3 hours of work from my Step 5 calculations.
+
+**Next**: Wrap the entire application in a Gradio UI so a non-programmer can upload their own CSV and chat with the coach.
+
+**Error Encountered**: When I ran the Gemini API for the first time, I got a `404 NotFound` error: `models/gemini-1.5-flash-latest is not found`. 
+
+**How I Fixed It**: The AI generated an invalid or outdated model string. I remembered the assignment brief specifically said to use the alias `gemini-flash-latest`. I corrected the AI's code to `model_name='gemini-flash-latest'`, re-ran the cell, and the API successfully returned the response. This taught me that you can't blindly trust AI-generated library parameters, especially for rapidly updating tools like the Gemini SDK.
