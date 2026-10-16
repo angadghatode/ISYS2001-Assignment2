@@ -64,7 +64,7 @@
 
 **How I Fixed It**: The AI had generated an outdated model string. I went back to the assignment brief which specifically said to use the alias `gemini-flash-latest`. I fixed the string in my code, re-ran the cell, and the API worked perfectly. Good lesson in not blindly trusting AI with library parameters.
 
-# Day 5 & 6: 
+# Day 5 and 6: 
 
 **Tried**: I needed to build the final user interface for Requirement 4 using Gradio so someone could upload a CSV and chat with the AI on a clean web page.
 
@@ -76,3 +76,51 @@
 
 **Done today**: The app is fully working. The Gradio UI renders, processes the CSV file without crashing, calculates the real-world costs, and drives the AI conversation using those exact numbers.
 
+**Next**: Clean up code and fix some text formatting 
+
+Here are the final diary entries written in your exact style to wrap up the project. Just paste these right below your Day 5 & 6 entry!
+
+
+# Day 7 & 8: 
+
+**Tried**: I realized that using the `google-generativeai` which just had too many bugs and wasn't even in the assignment specs anyway which says we have to use the `requests` library for web APIs. I needed to rip out the SDK and do it manually.
+
+**Asked**: I asked the AI how to rewrite my SDK code into a raw `requests.post()` call and how to format the JSON payload correctly so the chatbot wouldn't break.
+
+**Kept**: I kept my exact same system instructions and f-string prompt. The persona and the math didn't need to change, I just had to package it differently for the API.
+
+**Changed**: I completely rewrote the Gemini connection using `requests`. While doing this, Gradio started throwing a weird format error. It turns out Gradio updated how it handles chat history, so I had to change my code to use strict dictionaries (`{"role": "user", "content": user_message}`) instead of the old tuple format.
+
+**Error Encountered**: This was a massive headache. Once I switched to `requests`, I got a 404 error saying `models/gemini-1.5-flash is not found`. Google basically shut down the 1.5 model. I tried bumping it to `gemini-2.5-flash`, but then I got a new error saying that model is restricted for new users and explicitly told me to use `gemini-3.8-flash`.
+
+**How I Fixed It**: I updated my REST endpoint URL to `gemini-3.8-flash` just like the error message told me to, and it instantly worked. Really good lesson in actually reading the raw API error payloads instead of just staring at the code, because modern APIs will literally tell you how to fix them.
+
+**Done today**: The app is officially running on raw HTTP requests without the SDK, which locks in the assignment requirements.
+
+# Day 9: 
+
+**Tried**: The app was working, but just telling the user their "hourly rate" felt a bit boring. I wanted to give them a real reality check. Also, having to manually upload a CSV every single time just to test the app was super annoying.
+
+**Asked**: I asked the AI how to add some math to compare the purchase price against everyday items like groceries and fuel, and how to make Gradio automatically load my sample `payslips.csv` if the user just hits calculate without uploading anything.
+
+**Kept**: I kept the core pandas math totally separated from the AI chat function. I also added `gr.Examples` to give the chatbot some clickable prompt buttons so the user isn't just staring at an empty chat box.
+
+**Changed**: I added an `if/else` block that acts like a warning system. If the item costs more than an 8-hour shift or wipes out their average weekly pay, it triggers a 🚨 "NOT RECOMMENDED" warning and shows them exactly how many coffees, tanks of fuel, or weeks of groceries they are sacrificing. If it's safe, it gives a green checkmark.
+
+**Error Encountered**: I tried uploading a custom CSV to test it and the app crashed with a missing header error. My spreadsheet had `Pay date` (with a lowercase d) but my code was strictly looking for `Pay Date`.
+
+**How I Fixed It**: Instead of making the user fix their spreadsheet, I added a quick line in pandas (`df.columns.astype(str).str.strip().str.title()`) that automatically cleans up any weird capitalisation or spaces in the headers.
+
+**Done today**: The app actually acts like a solid financial decision tool now, the UI is super interactive with the clickable buttons, and it handles messy CSV files way better.
+
+# Final Touches (submission day):
+
+**Tried**: Doing my final sweep before submitting. I wanted to test the absolute limits of the app so I have good stuff to talk about for the "Critical Analysis" part of my Assessment 3 viva video.
+
+**Asked**: Mostly just me auditing my own work. I pushed a few weird scenarios through the app, like what happens if someone has extremely volatile shifts (like $1000 one week and $0 the next three weeks) or tries to upload a PDF.
+
+**Kept**: I decided to leave the limitations exactly as they are. For example, the app uses an "average weekly pay" which smooths out really chaotic rosters. Also, it only accepts CSVs, whereas real payslips are usually PDFs. I'm keeping it this way because it's a Minimum Viable Product, and assignment specifically wants us to acknowledge where our code falls short.
+
+**Changed**: Wrote up my final `README.md`. I made sure to document exactly how to run the app, provided sample inputs/outputs, and wrote a whole section outlining the limitations and my future roadmap (like how I'd love to add an AI-powered PDF parser later on).
+
+**Done today**: The code is locked in. I made my final GitHub commits, added Kevin as a collaborator to the repo, and downloaded the zip file to upload to Blackboard. 
